@@ -1,0 +1,46 @@
+Clases:
+
+	Estudiantes	
+		String 	IdEstudiantes
+		Int	IdProfesor
+		Int	IdCurso
+		String 	Cedula
+		String	Nombres
+		String 	Apellidos
+		DateTime fechaNacimiento
+		DateTime fechaIngreso
+		char 	Sexo
+		String	Telefono
+		String	Celular
+		String	Direccion
+		String	Comentario
+		byte	Foto
+
+
+	Profesores
+		Int 	IdProfesor
+		Int	IdCurso
+		String 	Cedula
+		String	Nombres
+		String 	Apellidos
+		DateTime fechaNacimiento
+		DateTime fechaIngreso
+		char 	Sexo
+		String	Telefono
+		String	Celular
+		String	Direccion
+		String	Comentario
+		byte	Foto	
+
+	Cursos:
+		Int	IdCurso
+		Int	IdProfesor
+		Int	IdEstudiante
+		String	Descripcion
+		String	Horario
+
+
+	Universidades
+		Int	IdUniversidad
+		String	Nombre
+		Int	IdEstudiante
