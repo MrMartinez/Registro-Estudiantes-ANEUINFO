@@ -54,27 +54,42 @@ namespace Registro
 
         private void dgvEstudiantes_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            BuscarEstudiante();
+        }
+
+        private void btnModificar_Click(object sender, EventArgs e)
+        {
+            ModificarEstudiante();
+        }
+
+        private void BuscarEstudiante()
+        {
+
             txtID.Text = dgvEstudiantes.CurrentRow.Cells["IdEstudiante"].Value.ToString();
             txtCedula.Text = dgvEstudiantes.CurrentRow.Cells["Cedula"].Value.ToString();
             txtNombres.Text = dgvEstudiantes.CurrentRow.Cells["Nombres"].Value.ToString();
             txtApellidos.Text = dgvEstudiantes.CurrentRow.Cells["Apellidos"].Value.ToString();
-            //dtpFechaNacimiento.Value =Convert.ToDateTime(dgvEstudiantes.CurrentRow.Cells["FechaNacimiento"].Value.);
-            //dtpFechaIngreso.Value = Convert.ToDateTime(dgvEstudiantes.CurrentRow.Cells["FechaIngreso"].Value);
+            dtpFechaNacimiento.Value = Convert.ToDateTime(dgvEstudiantes.CurrentRow.Cells[4].Value);
+            dtpFechaIngreso.Value = Convert.ToDateTime(dgvEstudiantes.CurrentRow.Cells[5].Value);
+
             if (dgvEstudiantes.CurrentRow.Cells["Sexo"].Value.ToString() == "M")
+
             {
                 txtSexo.SelectedIndex = 1;
             }
-            else
+            else if (dgvEstudiantes.CurrentRow.Cells["Sexo"].Value.ToString() == "F")
             {
+
                 txtSexo.SelectedItem = 2;
             }
-            ;
+          
+
             txtTelefono.Text = dgvEstudiantes.CurrentRow.Cells["Telefono"].Value.ToString();
             txtCelular.Text = dgvEstudiantes.CurrentRow.Cells["Celular"].Value.ToString();
             txtDireccion.Text = dgvEstudiantes.CurrentRow.Cells["Direccion"].Value.ToString();
             txtComentario.Text = dgvEstudiantes.CurrentRow.Cells["Comentario"].Value.ToString();
             activarBotones();
-            tabControl1.TabPages[0].Focus();
+            tabControl1.SelectedIndex = 0;
             txtNombres.Focus();
         }
 
@@ -141,7 +156,7 @@ namespace Registro
                     new SqlParameter("@FechaNacimiento", dtpFechaNacimiento.Value),
                     new SqlParameter("@Direccion", es.Direccion),
                     new SqlParameter("@Comentario", es.Comentario),
-                }; 
+                };
                 #endregion
 
                 helper.executeNonQuery("INSERT INTO Estudiantes (Cedula, Nombres, Apellidos, Sexo, Telefono, Celular, FechaNacimiento, FechaIngreso, Direccion, Comentario ) " +
@@ -198,7 +213,7 @@ namespace Registro
             txtComentario.Text = "";
             txtNombres.Focus();
         }
-        
+
         private void Estudiante_Load(object sender, EventArgs e)
         {
             cargarDataGrid();
@@ -228,7 +243,7 @@ namespace Registro
         private void activarBotones()
         {
 
-         
+
             if (txtID.Text == "")
             {
                 btnLimpiar.Enabled = false;
@@ -244,15 +259,47 @@ namespace Registro
             }
 
             var nombre = string.IsNullOrEmpty(txtNombres.Text) ? btnCrear.Enabled = false : btnCrear.Enabled = true;
-        
-          
-            
-            
+
+
+
+
         }
 
         private void txtNombres_TextChanged(object sender, EventArgs e)
         {
             activarBotones();
+        }
+
+
+        private void ModificarEstudiante()
+        {
+            try
+            {
+                //Creo los parametros a enviar en el helper
+                SqlParameter[] parameters = {
+                new SqlParameter("@Id",txtID.Text),
+                new SqlParameter("@Cedula", txtCedula.Text.Replace(@"-", "")),
+                new SqlParameter("@Nombres", txtNombres.Text),
+                new SqlParameter("@Apellidos", txtApellidos.Text),
+                new SqlParameter("@Sexo", txtSexo.Text.Substring(0,1)),
+                new SqlParameter("@Telefono", txtTelefono.Text.Replace(@"(", "").Replace(@")", "").Replace(@"-", "")),
+                new SqlParameter("@Celular", txtCelular.Text.Replace(@"(", "").Replace(@")", "").Replace(@"-", "")),
+                new SqlParameter("@FechaIngreso", dtpFechaIngreso.Value),
+                new SqlParameter("@FechaNacimiento", dtpFechaNacimiento.Value),
+                new SqlParameter("@Direccion",txtDireccion.Text),
+                new SqlParameter("@Comentario", txtComentario.Text),
+            };
+                var resultado = helper.executeNonQuery("UPDATE Estudiantes SET Nombres = @Nombres, Apellidos = @Apellidos, Sexo =@Sexo," +
+                                          "Telefono =@Telefono, Celular=@Celular, FechaNacimiento = @FechaNacimiento, " +
+                                          "Direccion = @Direccion, Comentario = @Comentario WHERE idEstudiante =@Id", CommandType.Text, parameters);
+                cargarDataGrid();
+                limpiarDatos();
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("Error accediendo al estudiante " + ex);
+            }
         }
     }
 }
