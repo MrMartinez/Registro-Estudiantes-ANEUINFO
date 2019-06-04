@@ -21,7 +21,7 @@ namespace Entity
         public string Celular { get; set; }
         public string Direccion { get; set; }
         public string Comentario { get; set; }
-        public byte Foto { get; set; }
+        public string Foto { get; set; }
     }
     
 }
