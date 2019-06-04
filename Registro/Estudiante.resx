@@ -6548,4 +6548,7 @@
         D///+AAAAAAf///8AAAAAD////8AAAAA/////8AAAAP/////8AAAH///////AAD///8=
 </value>
   </data>
+  <metadata name="openFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>376, 17</value>
+  </metadata>
 </root>

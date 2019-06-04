@@ -15,13 +15,13 @@ namespace Entity
         public string Nombres { get; set; }
         public string Apellidos { get; set; }
         public DateTime fechaNacimiento { get; set; }
-        public DateTime fechaIngreso { get; set; }
+        public DateTime? fechaIngreso { get; set; }
         public char Sexo { get; set; }
         public string Telefono { get; set; }
         public string Celular { get; set; }
         public string Direccion { get; set; }
         public string Comentario { get; set; }
-        public byte Foto { get; set; }
+        public string Foto { get; set; }
     }
     
 }

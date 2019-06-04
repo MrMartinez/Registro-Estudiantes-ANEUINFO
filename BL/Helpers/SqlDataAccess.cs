@@ -65,7 +65,7 @@ namespace BL.Helpers
                 else
                 {
                     b = false;
-                    MessageBox.Show("Error guardando registro");
+                    MessageBox.Show("Error Guardando/Modificando registro");
 
                 }
             }
