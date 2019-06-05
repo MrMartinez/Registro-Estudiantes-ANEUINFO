@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace Entity
 {
-    class Carreras
+    public class Profesor:Estudiantes
     {
-        public int Id { get; set; }
-        public int IdEstudiante { get; set; }
         public int IdProfesor { get; set; }
-        public string Descripcion { get; set; }
+        
+        public int IdCurso { get; set; }
     }
 }

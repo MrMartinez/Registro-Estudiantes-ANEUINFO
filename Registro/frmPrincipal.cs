@@ -24,7 +24,7 @@ namespace Registro
 
         private void btnEstudiantes_Click(object sender, EventArgs e)
         {
-            Estudiante frmEstudiantes = new Estudiante();
+            frmEstudiante frmEstudiantes = new frmEstudiante();
             frmEstudiantes.Show();
             this.Hide();
         }

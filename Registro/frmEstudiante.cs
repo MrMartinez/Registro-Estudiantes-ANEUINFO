@@ -15,13 +15,13 @@ using System.IO;
 
 namespace Registro
 {
-    public partial class Estudiante : Form
+    public partial class frmEstudiante : Form
     {
         public string strcon = string.Empty;
 
         SqlDataAccess helper = new SqlDataAccess();
 
-        public Estudiante()
+        public frmEstudiante()
         {
             InitializeComponent();
             try
@@ -35,6 +35,12 @@ namespace Registro
             }
         }
 
+        private void Estudiante_Load(object sender, EventArgs e)
+        {
+            cargarDataGrid();
+            limpiarDatos();
+            activarBotones();
+        }
 
         private void btnCrear_Click(object sender, EventArgs e)
         {
@@ -63,45 +69,21 @@ namespace Registro
             ModificarEstudiante();
         }
 
-        private void BuscarEstudiante()
+        private void btnBuscarFoto_Click(object sender, EventArgs e)
         {
-            limpiarDatos();
-            var dataFoto = dgvEstudiantes.CurrentRow.Cells[11].Value.ToString();
-            if (dataFoto != "")
+            try
             {
-            byte[] foto = new byte[0];
-            foto = (byte[])dgvEstudiantes.CurrentRow.Cells["Foto"].Value;
-            MemoryStream ms = new MemoryStream(foto);
-            pictureBoxFoto.Image = Bitmap.FromStream(ms);
-
+          
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    pictureBoxFoto.Load(this.openFileDialog1.FileName);
+                }
             }
-
-
-            txtID.Text = dgvEstudiantes.CurrentRow.Cells["IdEstudiante"].Value.ToString();
-            txtCedula.Text = dgvEstudiantes.CurrentRow.Cells["Cedula"].Value.ToString();
-            txtNombres.Text = dgvEstudiantes.CurrentRow.Cells["Nombres"].Value.ToString();
-            txtApellidos.Text = dgvEstudiantes.CurrentRow.Cells["Apellidos"].Value.ToString();
-            dtpFechaNacimiento.Value = Convert.ToDateTime(dgvEstudiantes.CurrentRow.Cells[4].Value);
-            dtpFechaIngreso.Value = Convert.ToDateTime(dgvEstudiantes.CurrentRow.Cells[5].Value);
-            if (dgvEstudiantes.CurrentRow.Cells["Sexo"].Value.ToString() == "M")
-
+            catch (Exception ex)
             {
-                txtSexo.SelectedIndex = 1;
-            }
-            else if (dgvEstudiantes.CurrentRow.Cells["Sexo"].Value.ToString() == "F")
-            {
-                txtSexo.SelectedIndex = 2;           
 
+                MessageBox.Show("Error localizando imagen" + ex);
             }
-            
-            txtTelefono.Text = dgvEstudiantes.CurrentRow.Cells["Telefono"].Value.ToString();
-            txtCelular.Text = dgvEstudiantes.CurrentRow.Cells["Celular"].Value.ToString();
-            txtDireccion.Text = dgvEstudiantes.CurrentRow.Cells["Direccion"].Value.ToString();
-            txtComentario.Text = dgvEstudiantes.CurrentRow.Cells["Comentario"].Value.ToString();
-            activarBotones();
-
-            tabControl1.SelectedIndex = 0;
-            txtNombres.Focus();
         }
 
         private void CrearEstudiante()
@@ -109,7 +91,11 @@ namespace Registro
             Estudiantes es = new Estudiantes();
 
             #region Asignando valores a las propiedades del obj Estudiante
-
+            if (pictureBoxFoto.Image == null)
+            {
+                errorProviderEstudiantes.SetError(pictureBoxFoto,"Escoja una foto ");
+                return;
+            }
             es.Cedula = txtCedula.Text.Replace(@"-", "");
             es.Nombres = txtNombres.Text;
             es.Apellidos = txtApellidos.Text;
@@ -118,6 +104,7 @@ namespace Registro
             es.Direccion = txtDireccion.Text;
             es.Comentario = txtComentario.Text;
             es.Foto = pictureBoxFoto.Image.ToString();
+
             if (txtSexo.SelectedIndex > 0)
             {
                 if (txtSexo.SelectedIndex == 1)
@@ -155,8 +142,12 @@ namespace Registro
                     return;
                 }
                 errorProviderEstudiantes.SetError(txtApellidos, "");
+
+                
                 MemoryStream ms = new MemoryStream();
+
                 pictureBoxFoto.Image.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+
                 #region Creando los parametros que se enviaran al helper
                 SqlParameter[] parameters = {
                     new SqlParameter("@Cedula", es.Cedula),
@@ -214,6 +205,84 @@ namespace Registro
             limpiarDatos();
         }
 
+        private void BuscarEstudiante()
+        {
+            limpiarDatos();
+            var dataFoto = dgvEstudiantes.CurrentRow.Cells[11].Value.ToString();
+            if (dataFoto != "")
+            {
+            byte[] foto = new byte[0];
+            foto = (byte[])dgvEstudiantes.CurrentRow.Cells["Foto"].Value;
+            MemoryStream ms = new MemoryStream(foto);
+            pictureBoxFoto.Image = Bitmap.FromStream(ms);
+
+            }
+
+
+            txtID.Text = dgvEstudiantes.CurrentRow.Cells["IdEstudiante"].Value.ToString();
+            txtCedula.Text = dgvEstudiantes.CurrentRow.Cells["Cedula"].Value.ToString();
+            txtNombres.Text = dgvEstudiantes.CurrentRow.Cells["Nombres"].Value.ToString();
+            txtApellidos.Text = dgvEstudiantes.CurrentRow.Cells["Apellidos"].Value.ToString();
+            dtpFechaNacimiento.Value = Convert.ToDateTime(dgvEstudiantes.CurrentRow.Cells[4].Value);
+            dtpFechaIngreso.Value = Convert.ToDateTime(dgvEstudiantes.CurrentRow.Cells[5].Value);
+            if (dgvEstudiantes.CurrentRow.Cells["Sexo"].Value.ToString() == "M")
+
+            {
+                txtSexo.SelectedIndex = 1;
+            }
+            else if (dgvEstudiantes.CurrentRow.Cells["Sexo"].Value.ToString() == "F")
+            {
+                txtSexo.SelectedIndex = 2;           
+
+            }
+            
+            txtTelefono.Text = dgvEstudiantes.CurrentRow.Cells["Telefono"].Value.ToString();
+            txtCelular.Text = dgvEstudiantes.CurrentRow.Cells["Celular"].Value.ToString();
+            txtDireccion.Text = dgvEstudiantes.CurrentRow.Cells["Direccion"].Value.ToString();
+            txtComentario.Text = dgvEstudiantes.CurrentRow.Cells["Comentario"].Value.ToString();
+            activarBotones();
+
+            tabControl1.SelectedIndex = 0;
+            txtNombres.Focus();
+        }
+
+        private void ModificarEstudiante()
+        {
+            try
+            {
+                //byte[] foto = new byte[0];
+                //foto = (byte[])dgvEstudiantes.CurrentRow.Cells["Foto"].Value;
+
+                MemoryStream ms = new MemoryStream();
+                pictureBoxFoto.Image.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                //Creo los parametros a enviar en el helper
+                SqlParameter[] parameters = {
+                new SqlParameter("@Id",txtID.Text),
+                new SqlParameter("@Cedula", txtCedula.Text.Replace(@"-", "")),
+                new SqlParameter("@Nombres", txtNombres.Text),
+                new SqlParameter("@Apellidos", txtApellidos.Text),
+                new SqlParameter("@Sexo", txtSexo.Text.Substring(0,1)),
+                new SqlParameter("@Telefono", txtTelefono.Text.Replace(@"(", "").Replace(@")", "").Replace(@"-", "")),
+                new SqlParameter("@Celular", txtCelular.Text.Replace(@"(", "").Replace(@")", "").Replace(@"-", "")),
+                new SqlParameter("@FechaIngreso", dtpFechaIngreso.Value),
+                new SqlParameter("@FechaNacimiento", dtpFechaNacimiento.Value),
+                new SqlParameter("@Direccion",txtDireccion.Text),
+                new SqlParameter("@Comentario", txtComentario.Text),
+                new SqlParameter("@Foto", ms.GetBuffer()),
+            };
+                var resultado = helper.executeNonQuery("UPDATE Estudiantes SET Nombres = @Nombres, Apellidos = @Apellidos, Sexo =@Sexo," +
+                                          "Telefono =@Telefono, Celular=@Celular, FechaNacimiento = @FechaNacimiento, " +
+                                          "Direccion = @Direccion, Comentario = @Comentario, Foto = @Foto WHERE idEstudiante =@Id", CommandType.Text, parameters);
+                cargarDataGrid();
+                limpiarDatos();
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("Error accediendo al estudiante " + ex);
+            }
+        }
+
         private void limpiarDatos()
         {
             txtID.Text = "";
@@ -229,14 +298,7 @@ namespace Registro
             dtpFechaNacimiento.Text = "";
             txtNombres.Focus();
         }
-
-        private void Estudiante_Load(object sender, EventArgs e)
-        {
-            cargarDataGrid();
-            limpiarDatos();
-            activarBotones();
-        }
-
+        
         private void cargarDataGrid()
         {
             dgvEstudiantes.DataSource = null;
@@ -288,58 +350,6 @@ namespace Registro
             
         }
 
-        private void ModificarEstudiante()
-        {
-            try
-            {
-                //byte[] foto = new byte[0];
-                //foto = (byte[])dgvEstudiantes.CurrentRow.Cells["Foto"].Value;
 
-                MemoryStream ms = new MemoryStream();
-                pictureBoxFoto.Image.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-                //Creo los parametros a enviar en el helper
-                SqlParameter[] parameters = {
-                new SqlParameter("@Id",txtID.Text),
-                new SqlParameter("@Cedula", txtCedula.Text.Replace(@"-", "")),
-                new SqlParameter("@Nombres", txtNombres.Text),
-                new SqlParameter("@Apellidos", txtApellidos.Text),
-                new SqlParameter("@Sexo", txtSexo.Text.Substring(0,1)),
-                new SqlParameter("@Telefono", txtTelefono.Text.Replace(@"(", "").Replace(@")", "").Replace(@"-", "")),
-                new SqlParameter("@Celular", txtCelular.Text.Replace(@"(", "").Replace(@")", "").Replace(@"-", "")),
-                new SqlParameter("@FechaIngreso", dtpFechaIngreso.Value),
-                new SqlParameter("@FechaNacimiento", dtpFechaNacimiento.Value),
-                new SqlParameter("@Direccion",txtDireccion.Text),
-                new SqlParameter("@Comentario", txtComentario.Text),
-                new SqlParameter("@Foto", ms.GetBuffer()),
-            };
-                var resultado = helper.executeNonQuery("UPDATE Estudiantes SET Nombres = @Nombres, Apellidos = @Apellidos, Sexo =@Sexo," +
-                                          "Telefono =@Telefono, Celular=@Celular, FechaNacimiento = @FechaNacimiento, " +
-                                          "Direccion = @Direccion, Comentario = @Comentario, Foto = @Foto WHERE idEstudiante =@Id", CommandType.Text, parameters);
-                cargarDataGrid();
-                limpiarDatos();
-            }
-            catch (Exception ex)
-            {
-
-                MessageBox.Show("Error accediendo al estudiante " + ex);
-            }
-        }
-
-        private void btnBuscarFoto_Click(object sender, EventArgs e)
-        {
-            try
-            {
-          
-                if (openFileDialog1.ShowDialog() == DialogResult.OK)
-                {
-                    pictureBoxFoto.Load(this.openFileDialog1.FileName);
-                }
-            }
-            catch (Exception ex)
-            {
-
-                MessageBox.Show("Error localizando imagen" + ex);
-            }
-        }
     }
 }
