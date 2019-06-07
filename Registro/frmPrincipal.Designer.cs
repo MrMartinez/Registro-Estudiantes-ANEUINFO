@@ -61,7 +61,7 @@
             this.toolStripSeparator2});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1285, 71);
+            this.toolStrip1.Size = new System.Drawing.Size(964, 71);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -100,7 +100,7 @@
             this.tsbMantenimientos.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbMantenimientos.Name = "tsbMantenimientos";
             this.tsbMantenimientos.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tsbMantenimientos.Size = new System.Drawing.Size(78, 68);
+            this.tsbMantenimientos.Size = new System.Drawing.Size(77, 68);
             this.tsbMantenimientos.Text = "Mantenimientos";
             this.tsbMantenimientos.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.tsbMantenimientos.ToolTipText = "Mantenimientos";
@@ -112,7 +112,7 @@
             this.btnEstudiantes.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnEstudiantes.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnEstudiantes.Name = "btnEstudiantes";
-            this.btnEstudiantes.Size = new System.Drawing.Size(120, 36);
+            this.btnEstudiantes.Size = new System.Drawing.Size(103, 36);
             this.btnEstudiantes.Text = "Estudiantes";
             this.btnEstudiantes.Click += new System.EventHandler(this.btnEstudiantes_Click);
             // 
@@ -122,7 +122,7 @@
             this.btnProfesores.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnProfesores.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnProfesores.Name = "btnProfesores";
-            this.btnProfesores.Size = new System.Drawing.Size(114, 36);
+            this.btnProfesores.Size = new System.Drawing.Size(98, 36);
             this.btnProfesores.Text = "Profesores";
             this.btnProfesores.Click += new System.EventHandler(this.btnProfesores_Click);
             // 
@@ -133,7 +133,7 @@
             this.btnCursos.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnCursos.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnCursos.Name = "btnCursos";
-            this.btnCursos.Size = new System.Drawing.Size(88, 36);
+            this.btnCursos.Size = new System.Drawing.Size(79, 36);
             this.btnCursos.Text = "Cursos";
             // 
             // btnUniversidades
@@ -142,8 +142,9 @@
             this.btnUniversidades.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnUniversidades.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnUniversidades.Name = "btnUniversidades";
-            this.btnUniversidades.Size = new System.Drawing.Size(137, 36);
+            this.btnUniversidades.Size = new System.Drawing.Size(116, 36);
             this.btnUniversidades.Text = "Universidades";
+            this.btnUniversidades.Click += new System.EventHandler(this.btnUniversidades_Click);
             // 
             // toolStripSeparator3
             // 
@@ -157,7 +158,7 @@
             this.tsbSalir.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsbSalir.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbSalir.Name = "tsbSalir";
-            this.tsbSalir.Size = new System.Drawing.Size(74, 68);
+            this.tsbSalir.Size = new System.Drawing.Size(65, 68);
             this.tsbSalir.Text = "Salir";
             this.tsbSalir.Click += new System.EventHandler(this.tsbSalir_Click);
             // 
@@ -172,7 +173,7 @@
             this.tsbAcerca.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsbAcerca.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbAcerca.Name = "tsbAcerca";
-            this.tsbAcerca.Size = new System.Drawing.Size(111, 68);
+            this.tsbAcerca.Size = new System.Drawing.Size(95, 68);
             this.tsbAcerca.Text = "Acerca de";
             // 
             // toolStripSeparator2
@@ -182,14 +183,14 @@
             // 
             // frmPrincipal
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.ClientSize = new System.Drawing.Size(1285, 673);
+            this.ClientSize = new System.Drawing.Size(964, 547);
             this.Controls.Add(this.toolStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "frmPrincipal";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

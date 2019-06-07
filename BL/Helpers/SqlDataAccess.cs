@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Entity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -46,6 +47,7 @@ namespace BL.Helpers
 
         }
 
+        //Para el insert y update
         public bool executeNonQuery(string commandText, CommandType commandType, params SqlParameter[] commandParameters)
         {
             bool b = false;
@@ -73,7 +75,30 @@ namespace BL.Helpers
 
         }
 
+        public List<Universidad> GetUniversidades()
+        {
+            List<Universidad> list = new List<Universidad>();
+            using (var conn = new SqlConnection(connectionString))
+            using (var cmd = new SqlCommand("SELECT * FROM Universidades", conn))
+            {
+                conn.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
 
+                while (dr.Read())
+                {
+                    Universidad uni = new Universidad
+                    {
+                        Id = dr.GetInt32(0),
+                        Siglas = dr.GetString(1)
+                    };
+                    list.Add(uni);
+                }
+                conn.Close();
+                return list;
+            }
+           
+           
+        }
 
 
 

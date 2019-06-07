@@ -35,5 +35,12 @@ namespace Registro
             profesores.Show();
             this.Hide();
         }
+
+        private void btnUniversidades_Click(object sender, EventArgs e)
+        {
+            frmUniversidad universidad = new frmUniversidad();
+            universidad.Show();
+            this.Hide();
+        }
     }
 }
