@@ -37,6 +37,9 @@ namespace Registro
 
         private void Estudiante_Load(object sender, EventArgs e)
         {
+            cbUniversidades.DataSource = helper.GetUniversidades();
+            cbUniversidades.DisplayMember = "Siglas";
+            cbUniversidades.ValueMember = "Id";
             cargarDataGrid();
             limpiarDatos();
             activarBotones();
@@ -102,6 +105,8 @@ namespace Registro
             es.Celular = txtCelular.Text.Replace(@"(", "").Replace(@")", "").Replace(@"-", "");
             es.Telefono = txtTelefono.Text.Replace(@"(", "").Replace(@")", "").Replace(@"-", "");
             es.Direccion = txtDireccion.Text;
+            es.fechaIngreso = DateTime.Now;
+            es.IdUniversidad =Convert.ToInt32(cbUniversidades.SelectedValue);
             es.Comentario = txtComentario.Text;
             es.Foto = pictureBoxFoto.Image.ToString();
 
@@ -143,11 +148,11 @@ namespace Registro
                 }
                 errorProviderEstudiantes.SetError(txtApellidos, "");
 
-                
-                MemoryStream ms = new MemoryStream();
 
-                pictureBoxFoto.Image.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                //MemoryStream ms = new MemoryStream();
 
+                //pictureBoxFoto.Image.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+               es.Foto= pictureBoxFoto.ImageLocation;
                 #region Creando los parametros que se enviaran al helper
                 SqlParameter[] parameters = {
                     new SqlParameter("@Cedula", es.Cedula),
@@ -156,16 +161,18 @@ namespace Registro
                     new SqlParameter("@Sexo", es.Sexo),
                     new SqlParameter("@Telefono", es.Telefono),
                     new SqlParameter("@Celular", es.Celular),
-                    new SqlParameter("@FechaIngreso", dtpFechaIngreso.Value),
+                    new SqlParameter("@FechaIngreso", es.fechaIngreso),
                     new SqlParameter("@FechaNacimiento", dtpFechaNacimiento.Value),
                     new SqlParameter("@Direccion", es.Direccion),
                     new SqlParameter("@Comentario", es.Comentario),
-                    new SqlParameter("@Foto", ms.GetBuffer()),
+                    new SqlParameter("@Universidad", es.IdUniversidad),
+                    new SqlParameter("@Foto", es.Foto),
+                    //new SqlParameter("@Foto", ms.GetBuffer()),
                 };
                 #endregion
 
-                helper.executeNonQuery("INSERT INTO Estudiantes (Cedula, Nombres, Apellidos, Sexo, Telefono, Celular, FechaNacimiento, FechaIngreso, Direccion, Comentario, Foto ) " +
-                                          "VALUES (@Cedula, @Nombres, @Apellidos, @Sexo, @Telefono, @Celular, CONVERT(DATETIME,@FechaNacimiento, 103), CONVERT(DATETIME,@FechaIngreso, 103), @Direccion, @Comentario, @Foto )", CommandType.Text, parameters);
+                helper.executeNonQuery("INSERT INTO Estudiantes (Cedula, Nombres, Apellidos, Sexo, Telefono, Celular, FechaNacimiento, FechaIngreso, Direccion, Comentario, Foto,IdUniversidad ) " +
+                                          "VALUES (@Cedula, @Nombres, @Apellidos, @Sexo, @Telefono, @Celular, CONVERT(DATETIME,@FechaNacimiento, 103), CONVERT(DATETIME,@FechaIngreso, 103), @Direccion, @Comentario, @Foto,@Universidad )", CommandType.Text, parameters);
 
                 #region Codigo anterior para guardar un estudiante
                 //string sql = "";

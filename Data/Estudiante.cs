@@ -22,6 +22,7 @@ namespace Entity
         public string Direccion { get; set; }
         public string Comentario { get; set; }
         public string Foto { get; set; }
+        public int IdUniversidad { get; set; }
     }
     
 }
