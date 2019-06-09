@@ -37,7 +37,7 @@ namespace Registro
 
         private void IniciarSession()
         {
-            Usuarios user = new Usuarios();
+            Usuario user = new Usuario();
             user.Nombre = txtUsuario.Text;
             user.Clave = txtContraseña.Text;
 

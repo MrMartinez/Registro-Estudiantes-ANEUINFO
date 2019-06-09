@@ -15,13 +15,13 @@ using System.IO;
 namespace Registro
 {
     
-    public partial class frmProfesores : Form
+    public partial class frmProfesor : Form
     {
   
         public string strcon = string.Empty;
         SqlDataAccess helper = new SqlDataAccess();
         
-        public frmProfesores()
+        public frmProfesor()
         {
             InitializeComponent();
             try
@@ -100,10 +100,10 @@ namespace Registro
             profe.Direccion = txtDireccion.Text;
             profe.Comentario = txtComentario.Text;
 
-            if (pictureBoxFoto.Image != null)
+            if (pictureBoxFoto.ImageLocation != null)
             {
 
-                profe.Foto = pictureBoxFoto.Image.ToString();
+                profe.Foto = pictureBoxFoto.ImageLocation.ToString();
             }
 
             if (txtSexo.SelectedIndex > 0)
@@ -142,11 +142,7 @@ namespace Registro
                     txtNombres.Focus();
                     return;
                 }
-                errorProviderProfesor.SetError(txtApellidos, "");
-
-                MemoryStream ms = new MemoryStream();
-
-                pictureBoxFoto.Image.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                errorProviderProfesor.SetError(txtApellidos, "");          
 
                 #region Creando los parametros que se enviaran al helper
                 SqlParameter[] parameters = {
@@ -160,7 +156,7 @@ namespace Registro
                     new SqlParameter("@FechaNacimiento", dtpFechaNacimiento.Value),
                     new SqlParameter("@Direccion", profe.Direccion),
                     new SqlParameter("@Comentario", profe.Comentario),
-                    new SqlParameter("@Foto", ms.GetBuffer()),
+                    new SqlParameter("@Foto", profe.Foto),
                 };
                 #endregion
 
@@ -182,18 +178,7 @@ namespace Registro
 
         private void BuscarProfesor()
         {
-            limpiarDatos();
-            var dataFoto = dgvProfesores.CurrentRow.Cells[11].Value.ToString();
-            if (dataFoto != "")
-            {
-                byte[] foto = new byte[0];
-                foto = (byte[])dgvProfesores.CurrentRow.Cells["Foto"].Value;
-                MemoryStream ms = new MemoryStream(foto);
-                pictureBoxFoto.Image = Bitmap.FromStream(ms);
-
-            }
-
-
+            limpiarDatos();          
             txtID.Text = dgvProfesores.CurrentRow.Cells["IdProfesor"].Value.ToString();
             txtCedula.Text = dgvProfesores.CurrentRow.Cells["Cedula"].Value.ToString();
             txtNombres.Text = dgvProfesores.CurrentRow.Cells["Nombres"].Value.ToString();
@@ -210,8 +195,8 @@ namespace Registro
                 txtSexo.SelectedIndex = 2;
 
             }
-
             txtTelefono.Text = dgvProfesores.CurrentRow.Cells["Telefono"].Value.ToString();
+            pictureBoxFoto.ImageLocation = dgvProfesores.CurrentRow.Cells["Foto"].Value.ToString();
             txtCelular.Text = dgvProfesores.CurrentRow.Cells["Celular"].Value.ToString();
             txtDireccion.Text = dgvProfesores.CurrentRow.Cells["Direccion"].Value.ToString();
             txtComentario.Text = dgvProfesores.CurrentRow.Cells["Comentario"].Value.ToString();
@@ -243,7 +228,7 @@ namespace Registro
                 new SqlParameter("@FechaNacimiento", dtpFechaNacimiento.Value),
                 new SqlParameter("@Direccion",txtDireccion.Text),
                 new SqlParameter("@Comentario", txtComentario.Text),
-                new SqlParameter("@Foto", ms.GetBuffer()),
+                new SqlParameter("@Foto", pictureBoxFoto.ImageLocation.ToString()),
             };
                 var resultado = helper.executeNonQuery("UPDATE Profesores SET Nombres = @Nombres, Apellidos = @Apellidos, Sexo =@Sexo," +
                                           "Telefono =@Telefono, Celular=@Celular, FechaNacimiento = @FechaNacimiento, " +

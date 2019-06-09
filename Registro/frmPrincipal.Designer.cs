@@ -61,7 +61,7 @@
             this.toolStripSeparator2});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(964, 71);
+            this.toolStrip1.Size = new System.Drawing.Size(984, 71);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -135,6 +135,7 @@
             this.btnCursos.Name = "btnCursos";
             this.btnCursos.Size = new System.Drawing.Size(79, 36);
             this.btnCursos.Text = "Cursos";
+            this.btnCursos.Click += new System.EventHandler(this.btnCursos_Click);
             // 
             // btnUniversidades
             // 
@@ -187,10 +188,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.ClientSize = new System.Drawing.Size(964, 547);
+            this.ClientSize = new System.Drawing.Size(984, 561);
             this.Controls.Add(this.toolStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "frmPrincipal";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

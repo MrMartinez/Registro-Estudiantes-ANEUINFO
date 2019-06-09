@@ -91,14 +91,14 @@ namespace Registro
 
         private void CrearEstudiante()
         {
-            Estudiantes es = new Estudiantes();
+            Estudiante es = new Estudiante();
 
             #region Asignando valores a las propiedades del obj Estudiante
-            if (pictureBoxFoto.Image == null)
-            {
-                errorProviderEstudiantes.SetError(pictureBoxFoto,"Escoja una foto ");
-                return;
-            }
+            //if (pictureBoxFoto.Image == null)
+            //{
+            //    errorProviderEstudiantes.SetError(pictureBoxFoto,"Escoja una foto ");
+            //    return;
+            //}
             es.Cedula = txtCedula.Text.Replace(@"-", "");
             es.Nombres = txtNombres.Text;
             es.Apellidos = txtApellidos.Text;
@@ -108,7 +108,15 @@ namespace Registro
             es.fechaIngreso = DateTime.Now;
             es.IdUniversidad =Convert.ToInt32(cbUniversidades.SelectedValue);
             es.Comentario = txtComentario.Text;
-            es.Foto = pictureBoxFoto.Image.ToString();
+            if (pictureBoxFoto.ImageLocation != null)
+            {
+                es.Foto = pictureBoxFoto.Image.ToString();
+
+            }
+            else
+            {
+                es.Foto = pictureBoxFoto.ImageLocation = @"";
+            }
 
             if (txtSexo.SelectedIndex > 0)
             {
@@ -215,15 +223,15 @@ namespace Registro
         private void BuscarEstudiante()
         {
             limpiarDatos();
-            var dataFoto = dgvEstudiantes.CurrentRow.Cells[11].Value.ToString();
-            if (dataFoto != "")
-            {
-            byte[] foto = new byte[0];
-            foto = (byte[])dgvEstudiantes.CurrentRow.Cells["Foto"].Value;
-            MemoryStream ms = new MemoryStream(foto);
-            pictureBoxFoto.Image = Bitmap.FromStream(ms);
+            //var dataFoto = dgvEstudiantes.CurrentRow.Cells[11].Value.ToString();
+            //if (dataFoto != "")
+            //{
+            //byte[] foto = new byte[0];
+            //foto = (byte[])dgvEstudiantes.CurrentRow.Cells["Foto"].Value;
+            //MemoryStream ms = new MemoryStream(foto);
+            //pictureBoxFoto.Image = Bitmap.FromStream(ms);
 
-            }
+            //}
 
 
             txtID.Text = dgvEstudiantes.CurrentRow.Cells["IdEstudiante"].Value.ToString();
@@ -242,9 +250,10 @@ namespace Registro
                 txtSexo.SelectedIndex = 2;           
 
             }
-            
+            pictureBoxFoto.ImageLocation = dgvEstudiantes.CurrentRow.Cells["Foto"].Value.ToString();
             txtTelefono.Text = dgvEstudiantes.CurrentRow.Cells["Telefono"].Value.ToString();
             txtCelular.Text = dgvEstudiantes.CurrentRow.Cells["Celular"].Value.ToString();
+            cbUniversidades.SelectedValue = Convert.ToInt32(dgvEstudiantes.CurrentRow.Cells["IdUniversidad"].Value);
             txtDireccion.Text = dgvEstudiantes.CurrentRow.Cells["Direccion"].Value.ToString();
             txtComentario.Text = dgvEstudiantes.CurrentRow.Cells["Comentario"].Value.ToString();
             activarBotones();
@@ -257,11 +266,13 @@ namespace Registro
         {
             try
             {
+                #region Con este codigo guardaba el campo foto como IMAGE en la DB.
                 //byte[] foto = new byte[0];
                 //foto = (byte[])dgvEstudiantes.CurrentRow.Cells["Foto"].Value;
 
-                MemoryStream ms = new MemoryStream();
-                pictureBoxFoto.Image.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                //MemoryStream ms = new MemoryStream();
+                //pictureBoxFoto.Image.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg); 
+                #endregion
                 //Creo los parametros a enviar en el helper
                 SqlParameter[] parameters = {
                 new SqlParameter("@Id",txtID.Text),
@@ -274,12 +285,13 @@ namespace Registro
                 new SqlParameter("@FechaIngreso", dtpFechaIngreso.Value),
                 new SqlParameter("@FechaNacimiento", dtpFechaNacimiento.Value),
                 new SqlParameter("@Direccion",txtDireccion.Text),
+                new SqlParameter("@Universidad",cbUniversidades.SelectedValue),
                 new SqlParameter("@Comentario", txtComentario.Text),
-                new SqlParameter("@Foto", ms.GetBuffer()),
+                new SqlParameter("@Foto", pictureBoxFoto.ImageLocation.ToString()),
             };
                 var resultado = helper.executeNonQuery("UPDATE Estudiantes SET Nombres = @Nombres, Apellidos = @Apellidos, Sexo =@Sexo," +
                                           "Telefono =@Telefono, Celular=@Celular, FechaNacimiento = @FechaNacimiento, " +
-                                          "Direccion = @Direccion, Comentario = @Comentario, Foto = @Foto WHERE idEstudiante =@Id", CommandType.Text, parameters);
+                                          "Direccion = @Direccion, IdUniversidad= @Universidad, Comentario = @Comentario, Foto = @Foto WHERE idEstudiante =@Id", CommandType.Text, parameters);
                 cargarDataGrid();
                 limpiarDatos();
             }

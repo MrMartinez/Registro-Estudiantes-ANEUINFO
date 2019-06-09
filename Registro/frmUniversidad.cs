@@ -177,5 +177,11 @@ namespace Registro
             txtNombre.Focus();
         }
 
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            frmPrincipal frmPrincipal = new frmPrincipal();
+            this.Close();
+            frmPrincipal.Show();
+        }
     }
 }

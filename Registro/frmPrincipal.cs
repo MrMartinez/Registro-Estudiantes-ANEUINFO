@@ -31,7 +31,7 @@ namespace Registro
 
         private void btnProfesores_Click(object sender, EventArgs e)
         {
-            frmProfesores profesores = new frmProfesores();
+            frmProfesor profesores = new frmProfesor();
             profesores.Show();
             this.Hide();
         }
@@ -40,6 +40,13 @@ namespace Registro
         {
             frmUniversidad universidad = new frmUniversidad();
             universidad.Show();
+            this.Hide();
+        }
+
+        private void btnCursos_Click(object sender, EventArgs e)
+        {
+            frmCurso curso = new frmCurso();
+            curso.Show();
             this.Hide();
         }
     }
