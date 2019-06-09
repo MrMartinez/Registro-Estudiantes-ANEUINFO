@@ -48,11 +48,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmCurso.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCurso.Designer.cs">
+      <DependentUpon>frmCurso.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmEstudiante.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmEstudiante.Designer.cs">
       <DependentUpon>frmEstudiante.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmInscripcion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmInscripcion.Designer.cs">
+      <DependentUpon>frmInscripcion.cs</DependentUpon>
     </Compile>
     <Compile Include="frmPrincipal.cs">
       <SubType>Form</SubType>
@@ -60,11 +72,11 @@
     <Compile Include="frmPrincipal.Designer.cs">
       <DependentUpon>frmPrincipal.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmProfesores.cs">
+    <Compile Include="frmProfesor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmProfesores.Designer.cs">
-      <DependentUpon>frmProfesores.cs</DependentUpon>
+    <Compile Include="frmProfesor.Designer.cs">
+      <DependentUpon>frmProfesor.cs</DependentUpon>
     </Compile>
     <Compile Include="frmUniversidad.cs">
       <SubType>Form</SubType>
@@ -80,14 +92,20 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="frmCurso.resx">
+      <DependentUpon>frmCurso.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmEstudiante.resx">
       <DependentUpon>frmEstudiante.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmInscripcion.resx">
+      <DependentUpon>frmInscripcion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmPrincipal.resx">
       <DependentUpon>frmPrincipal.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmProfesores.resx">
-      <DependentUpon>frmProfesores.cs</DependentUpon>
+    <EmbeddedResource Include="frmProfesor.resx">
+      <DependentUpon>frmProfesor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmUniversidad.resx">
       <DependentUpon>frmUniversidad.cs</DependentUpon>
@@ -125,9 +143,9 @@
       <Project>{7c0e7a59-3d11-41de-bb2a-f16bd9465956}</Project>
       <Name>BL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Data\Data.csproj">
+    <ProjectReference Include="..\Data\Entity.csproj">
       <Project>{c8922e7f-9a5f-4b46-9eea-0b4a8263c5da}</Project>
-      <Name>Data</Name>
+      <Name>Entity</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

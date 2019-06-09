@@ -15,7 +15,7 @@ namespace Entity
         public string Direccion { get; set; }
         public string Comentario { get; set; }
 
-        public List<Estudiantes> Estudiantes { get; set; }
+        public List<Estudiante> Estudiantes { get; set; }
 
     }
 }

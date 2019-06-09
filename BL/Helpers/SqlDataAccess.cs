@@ -75,6 +75,7 @@ namespace BL.Helpers
 
         }
 
+        //Para llenar combo de universidades
         public List<Universidad> GetUniversidades()
         {
             List<Universidad> list = new List<Universidad>();
@@ -100,6 +101,31 @@ namespace BL.Helpers
            
         }
 
+
+        //Para llenar combo de profesores
+        public List<Profesor> GetCursos()
+        {
+            List<Profesor> listaProfesor = new List<Profesor>();
+            using (var conn = new SqlConnection(connectionString))
+            using (var cmd = new SqlCommand("SELECT * FROM Profesores", conn))
+            {
+                conn.Open();
+                
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    Profesor profesor = new Profesor
+                    {
+                        IdProfesor = dr.GetInt32(0),
+                        Nombres = dr.GetString(1) +' '+ dr.GetString(2),
+                      
+                    };
+                    listaProfesor.Add(profesor);
+                }
+                conn.Close();
+                return listaProfesor;
+            }
+        }
 
 
     }
